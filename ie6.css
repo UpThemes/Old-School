@@ -1,0 +1,23 @@
+#nav li,
+#nav a{
+	display: inline;
+	float: left;
+	width: auto;
+}
+
+#nav a{
+	padding-top: 5px;
+}
+
+#nav li:hover ul,
+#nav li.sfHover ul{
+	left: -15px;
+}
+
+.submit{margin-top: -20px; position: relative;}
+
+#myController span{padding: 0 8px; background: transparent;}
+#myController span.jFlowSelected { background: transparent; font-weight: bold;}
+
+#sidebar-content{width: 400px; overflow: hidden;}
+#sidebar-content .column{ width: 180px; margin-left: 0; float: left;}
