@@ -2,7 +2,20 @@
 <html <?php language_attributes(); ?>>
 <head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-<title><?php bloginfo('name'); ?> <?php wp_title(); ?></title>
+<?php
+/* Title Function */
+    if(function_exists('up_title')):
+        echo "<title>".up_title()."</title>";
+    else:
+        echo "<title>";
+        wp_title('');
+        if(!is_home())echo ' - '.get_bloginfo('name');
+        echo "</title>";
+    endif;
+    
+    /* SEO */
+    do_action('up_seo');
+?>
  
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_directory') ?>/style.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_directory') ?>/print.css" media="print" />
@@ -20,7 +33,7 @@ DD_belatedPNG.fix("body,#logo,input.s,#maincontent .postwrapper,#sidebar-content
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_directory') ?>/ie7.css" media="screen" />
 <![endif]-->
 
-<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php rss(); ?>" />
+<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php upfw_rss(); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 <?php

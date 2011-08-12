@@ -101,6 +101,6 @@ add_image_size('featured-thumb',300,250,1);
 add_image_size('post-image',180,180,1);
 
 // Bootstrap the UpThemes Framework
-include("admin/functions.php");
+include("admin/admin.php");
 
 ?>
