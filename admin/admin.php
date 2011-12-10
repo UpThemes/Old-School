@@ -3,7 +3,7 @@
 /******
 ** UpThemes Framework Version
 *************************************/
-define('UPTHEMES_VER', '2.0');
+define('UPTHEMES_VER', '2.0.2');
 
 /******
 ** Theme init hook
@@ -51,10 +51,10 @@ function upfw_generate_theme_data(){
 
 	if( file_exists(TEMPLATEPATH.'/admin/admin.php') ):
 		define( 'THEME_PATH' , TEMPLATEPATH );
-		define( 'THEME_DIR' , get_bloginfo("template_directory") );
+		define( 'THEME_DIR' , get_template_directory_uri() );
 	elseif( file_exists(STYLESHEETPATH.'/admin/admin.php') ):
 		define( 'THEME_PATH' , STYLESHEETPATH );
-		define( 'THEME_DIR' , get_bloginfo("stylesheet_directory") );
+		define( 'THEME_DIR' , get_stylesheet_directory_uri() );
 	endif;
 	
 	// Detect child theme info
@@ -133,7 +133,7 @@ function upfw_set_uploads_dir(){
 				add_action( 'admin_notices', 'upfw_permissions_error', 1, 1 );
 			else{
 				$oldumask = umask(0);
-				@mkdir($base_upload_dir, 0777);
+				@mkdir($base_upload_dir, 0775);
 				umask($oldumask);
 				
 				if( is_writeable( $base_upload_dir ) )
@@ -241,8 +241,8 @@ function upfw_queue_scripts_styles(){
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-widget');
     wp_enqueue_script('jquery-ui-mouse');
-    wp_enqueue_script('jquery-ui-slider', get_bloginfo('template_directory').'/admin/js/jquery.ui.slider.js', array('jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'));
-    wp_enqueue_style('up-slider', get_bloginfo('template_directory').'/admin/css/ui-themes/smoothness/style.css');
+    wp_enqueue_script('jquery-ui-slider', get_template_directory_uri().'/admin/js/jquery.ui.slider.js', array('jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'));
+    wp_enqueue_style('up-slider', get_template_directory_uri().'/admin/css/ui-themes/smoothness/style.css');
 
 }
 
@@ -280,6 +280,69 @@ function show_gallery_images(){
 	closedir($dir_handle);
 	die();
 
+}
+
+/**
+ * Get current template context
+ * 
+ * Returns a string containing the context of the
+ * current page template. This string is useful for several
+ * purposes, including applying an ID to the HTML
+ * body tag, and adding a contextual $name to calls
+ * to get_header(), get_footer(), get_sidebar(), 
+ * and get_template_part_file(), in order to 
+ * facilitate Child Themes overriding default Theme
+ * template part files.
+ * 
+ * @param	none
+ * @return	string	current page template context
+ */
+function upfw_get_template_context() {
+
+	$context = 'index';
+	
+	if ( is_front_page() ) {
+		// Front Page
+		$context = 'front-page';
+	} else if ( is_date() ) {
+		// Date Archive Index
+		$context = 'date';
+	} else if ( is_author() ) {
+		// Author Archive Index
+		$context = 'author';
+	} else if ( is_category() ) {
+		// Category Archive Index
+		$context = 'category';
+	} else if ( is_tag() ) {
+		// Tag Archive Index
+		$context = 'tag';
+	} else if ( is_tax() ) {
+		// Taxonomy Archive Index
+		$context = 'taxonomy';
+	} else if ( is_archive() ) {
+		// Archive Index
+		$context = 'archive';
+	} else if ( is_search() ) {
+		// Search Results Page
+		$context = 'search';
+	} else if ( is_404() ) {
+		// Error 404 Page
+		$context = '404';
+	} else if ( is_attachment() ) {
+		// Attachment Page
+		$context = 'attachment';
+	} else if ( is_single() ) {
+		// Single Blog Post
+		$context = 'single';
+	} else if ( is_page() ) {
+		// Static Page
+		$context = 'page';
+	} else if ( is_home() ) {
+		// Blog Posts Index
+		$context = 'home';
+	}
+	
+	return $context;
 }
 
 add_action('wp_ajax_show_gallery_images','show_gallery_images');
@@ -337,7 +400,7 @@ add_action('upfw_admin_init','upfw_create_options_tabs',50);
 *************************************/
 function upfw_set_defaults(){
 
-	if( !get_option('up_themes_'.UPTHEMES_SHORT_NAME) && $_GET['page']!="upthemes" ):
+	if( ! get_option( 'up_themes_'.UPTHEMES_SHORT_NAME) && ( ! isset( $_GET['page'] ) || 'upthemes' != $_GET['page'] ) ) :
 	
 		//Redirect to options page where defaults will automatically be set
 		header('Location: '.get_bloginfo('url').'/wp-admin/admin.php?page=upthemes');
@@ -394,22 +457,22 @@ function upfw_upthemes_admin() {
 
 	$theme_options_icon = apply_filters('theme_options_icon',THEME_DIR.'/admin/images/upfw_ico_up_16x16.png');
 
-    add_menu_page($name, $name, '10', 'upthemes', 'upthemes_admin_home', $theme_options_icon, 59);
+    add_menu_page($name, $name, 'edit_theme_options', 'upthemes', 'upthemes_admin_home', $theme_options_icon, 59);
   
 	//Create tabbed pages from array
 	global $up_tabs;
 	if( is_array( $up_tabs ) ):
 		foreach ($up_tabs as $tab):
 			foreach($tab as $title => $shortname):
-				add_submenu_page('upthemes', $title, $title, '10', 'upthemes#/'.$shortname, 'upthemes_admin_'.$shortname);
+				add_submenu_page('upthemes', $title, $title, 'edit_theme_options', 'upthemes#/'.$shortname, 'upthemes_admin_'.$shortname);
 			endforeach;
 		endforeach;
 	endif;
 
 	//Static subpages
-	add_submenu_page('upthemes', __('Import/Export','upfw'), __('Import/Export','upfw'), '10', 'upthemes#/import-export', 'upthemes_admin_import_export');
-	add_submenu_page('upthemes', __('Documentation','upfw'), __('Documentation','upfw'), '10', 'upthemes-docs', 'upthemes_admin_docs');
-	add_submenu_page('upthemes', __('Buy Themes','upfw'), __('Buy Themes','upfw'), '10', 'upthemes-buy', 'upthemes_admin_buy');
+	add_submenu_page('upthemes', __('Import/Export','upfw'), __('Import/Export','upfw'), 'edit_theme_options', 'upthemes#/import-export', 'upthemes_admin_import_export');
+	add_submenu_page('upthemes', __('Documentation','upfw'), __('Documentation','upfw'), 'edit_theme_options', 'upthemes-docs', 'upthemes_admin_docs');
+	add_submenu_page('upthemes', __('Buy Themes','upfw'), __('Buy Themes','upfw'), 'edit_theme_options', 'upthemes-buy', 'upthemes_admin_buy');
 
 }
 
@@ -427,12 +490,34 @@ function find_defaults($options){
 ** Render theme options
 *************************************/
 function render_options($options){
+
+	//Check if theme options set
+	global $default_check;
+	global $default_options;
+	global $attr;
+	$attr = '';
+
+	if(!$default_check):
+		foreach($options as $option):
+			if($option['type'] != 'image'):
+				$default_options[$option['id']] = $option['value'];
+			else:
+				$default_options[$option['id']] = $option['url'];
+			endif;
+		endforeach;
+		$update_option = get_option('up_themes_'.UPTHEMES_SHORT_NAME);
+		if(is_array($update_option)):
+			$update_option = array_merge($update_option, $default_options);
+			update_option('up_themes_'.UPTHEMES_SHORT_NAME, $update_option);
+		else:
+			update_option('up_themes_'.UPTHEMES_SHORT_NAME, $default_options);
+		endif;
+	endif;
     
     foreach ($options as $value) {
         //Check if there are additional attributes
-        if(is_array($value['attr'])):
+        if ( isset( $value['attr'] ) && is_array( $value['attr'] ) ):
             $i = $value['attr'];
-            global $attr;
             //Convert array into a string
             foreach($i as $k => $v):
                 $attr .= $k.'="'.$v.'" ';
