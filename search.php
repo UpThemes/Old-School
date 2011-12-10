@@ -1,10 +1,10 @@
 <?php get_header(); ?>
 
-  <div id="main" class="clearfix">
+<div id="main" class="clearfix">
   
     <div id="maincontent">
     
-		<?php above_content_ads(); ?>
+		<?php oldschool_above_content_ads(); ?>
     
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -39,21 +39,21 @@
 		<?php endwhile; ?>
 
 		<?php else : ?>
-			<h1><?php _e('Not Found'); ?></h1>
-			<p><?php _e('Sorry, but you are looking for something that is not here.'); ?></p>
-			<?php include (TEMPLATEPATH . "/searchform.php"); ?>
-			<div class="postmeta"></div>
+
+			<?php oldschool_no_posts(); ?>
+
 		<?php endif; ?>
 
-			<?php below_content_ads(); ?>
+		<?php oldschool_below_content_ads(); ?>
 
-			<div class="navigation">
-				<?php posts_nav_link('&#8734;','Go Forward In Time &raquo;','&laquo; Go Back in Time'); ?>
-			</div>
+		<div class="navigation">
+			<?php posts_nav_link('&#8734;','Go Forward In Time &raquo;','&laquo; Go Back in Time'); ?>
+		</div>
+
     </div>
       
-	  <?php get_sidebar() ?>
+	<?php get_sidebar(); ?>
 
-  </div>
+</div>
 
 <?php get_footer(); ?>

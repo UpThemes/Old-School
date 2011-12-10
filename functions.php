@@ -121,7 +121,18 @@ add_filter( 'body_class', 'oldschool_filter_body_class' );
 
 
 
-function above_content_ads(){
+function oldschool_no_posts() {
+	?>
+<h1><?php _e( 'Not Found', 'oldschool' ); ?></h1>
+<p><?php _e( 'Sorry, but you are looking for something that is not here.', 'oldschool' ); ?></p>
+<?php get_search_form(); ?>
+<div class="postmeta"></div>
+	<?php
+}
+
+
+
+function oldschool_above_content_ads(){
 	global $up_options;
     if($up_options->above_content_ads){ ?>
     <div class="adspot">
@@ -131,7 +142,7 @@ function above_content_ads(){
 }
 
 
-function below_content_ads(){
+function oldschool_below_content_ads(){
 	global $up_options;
     if($up_options->below_content_ads){ ?>
     <div class="adspot">
