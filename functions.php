@@ -48,7 +48,7 @@ function widgets_init() {
 	// Area 2
     register_sidebar(array(
        	'name' => 'Footer',
-       	'id' => 'footer', 
+       	'id' => 'footer-area', 
        	'before_widget' => '<li id="%1$s" class="widgetcontainer %2$s">',
        	'after_widget' => "</li>",
 		'before_title' => "<h3 class=\"widgettitle\">",

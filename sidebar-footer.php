@@ -1,4 +1,4 @@
-<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('footer') ) : // begin primary sidebar widgets ?>
+<?php if ( ! dynamic_sidebar( 'footer-area' ) ) : // begin footer sidebar widgets ?>
 			<li id="search">
 				<h3><label for="s"><?php _e('Search'); ?></label></h3>
 				<form id="searchform" method="get" action="<?php bloginfo('home') ?>">
@@ -31,4 +31,4 @@
 
 				</ul>
 			</li>
-<?php endif; // end primary sidebar widgets  ?>
+<?php endif; // end footer sidebar widgets  ?>
