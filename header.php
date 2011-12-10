@@ -40,7 +40,7 @@
 <?php $body_id = ( is_home() ? "home" : "interior" ); ?>
 <body id="<?php echo $body_id; ?>" <?php body_class(); ?>>
 
-  <div id="container">
+	<div id="container">
 		<div id="header">
 	        <?php
 

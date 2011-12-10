@@ -5,7 +5,6 @@ $featured_thumb_query_args = array(
 	'cat'		=> get_cat_id( $up_options->featured_cat )
 );
 $featured_thumb_query = new WP_Query( $featured_thumb_query_args );
-//query_posts('showposts=3&cat=' . get_cat_id($up_options->featured_cat));
 if( $featured_thumb_query->have_posts() ) : 
 ?>
 
@@ -29,5 +28,4 @@ endwhile;
 <?php
 endif;
 wp_reset_postdata();
-//wp_reset_query();
 ?>
