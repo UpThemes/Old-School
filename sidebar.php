@@ -3,12 +3,10 @@
   <div id="dual-column">
   
     <div class="adblock">
-<?php
-global $up_options;
-
-echo $up_options->sidebar_ads;
-
-?>
+			<?php
+			$up_options = upfw_get_options();
+			echo $up_options->sidebar_ads;
+			?>
     </div>
   
   </div>

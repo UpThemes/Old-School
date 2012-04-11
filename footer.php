@@ -1,4 +1,4 @@
-<?php global $up_options; ?>
+<?php $up_options = upfw_get_options(); ?>
 	
   </div>
   <div id="footer">

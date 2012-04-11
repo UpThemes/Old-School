@@ -2,10 +2,10 @@
  
 <?php
 
-global $up_options;
+$up_options = upfw_get_options();
 
-if( is_home() ) {
-	locate_template( '/includes/featured.php', true );
+if( is_home() && $up_options->hide_homepage_images == 'no' ) {
+	get_template_part('loop','featured');
 }
 
 ?>

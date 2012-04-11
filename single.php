@@ -1,7 +1,7 @@
 <?php 
 
 get_header();
-global $up_options;
+$up_options = upfw_get_options();
 
 ?>
 <div id="main" class="clearfix">

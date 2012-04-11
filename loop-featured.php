@@ -1,5 +1,5 @@
 <?php 
-global $up_options;
+$up_options = upfw_get_options();
 $featured_thumb_query_args = array(
 	'showposts' => 3,
 	'cat'		=> get_cat_id( $up_options->featured_cat )
@@ -27,5 +27,5 @@ endwhile;
 </ul>
 <?php
 endif;
-wp_reset_postdata();
+wp_reset_query();
 ?>

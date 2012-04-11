@@ -4,10 +4,10 @@ Theme URI: http://upthemes.com/themes/old-school/
 Description: Old School is a great magazine or photoblog-style theme.
 Author: Chris Wallace for <a href="http://upthemes.com">UpThemes</a>
 Author URI: http://upthemes.com
-Version: 1.6.2
+Version: 1.7
 */
 
-@import url(droidserif-font/stylesheet.css);
+@import url("droidserif-font/stylesheet.css");
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -289,7 +289,24 @@ button:active
 #header
 {
 	height: 102px;
+	margin-top: 0;
 	overflow: visible;
+}
+#logo{
+	font-size: 14px;
+	line-height: 1em;
+	margin-left: 15px;
+	margin-top: 16px;
+}
+#logo h1{
+	margin: 0;
+	padding: 0;
+}
+#logo p{
+	margin-top: 5px;
+}
+#logo h1 a{
+	color: #51352B;
 }
 #nav
 {
@@ -544,7 +561,7 @@ img
 }
 #header
 {
-	padding: 20px 0 0 0;
+	padding: 0;
 	position: relative;
 	z-index: 20;
 }
@@ -559,8 +576,9 @@ img
 {
 	display: block;
 	float: right;
-	height: 25px;
-	margin-top: -17px;
+	height: 33px;
+	line-height: 33px;
+	margin-top: 0;
 	position: relative;
 	text-align: right;
 	width: 660px;
@@ -596,17 +614,28 @@ img
 }
 #header h1
 {
-	height: 53px;
-	margin: 0 0 16px 8px;
-	width: 260px;
+	margin: 0;
+	display: inline-block;
 }
 #header h1 a img
 {
 	border: 0;
 }
+#header h1 p.desc
+{
+	margin-bottom: 12px;
+	font-size: 14px;
+	font-weight: normal;
+	font-family: georgia;
+}
 #header fieldset
 {
 	position: relative;
+	display: inline;
+	top: -6px;
+	padding: 0;
+	height: auto;
+	vertical-align: middle;
 }
 input.s,
 #commentform input[type="text"]
