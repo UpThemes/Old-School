@@ -22,7 +22,7 @@ function oldschool_setup_theme() {
 }
 add_action( 'after_setup_theme', 'oldschool_setup_theme' );
 
-function storefrontal_init(){
+function oldschool_init(){
 
 	register_default_headers( array (
 		'default' => array (
@@ -32,15 +32,53 @@ function storefrontal_init(){
 		)
 	);
 
-	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'storefrontal_header_image_width', 227 ) );
-	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'storefrontal_header_image_height',	54 ) );
-	define( 'HEADER_TEXTCOLOR', apply_filters( 'storefrontal_header_image_textcolor', "#ff4a4b" ) );
+	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'oldschool_header_image_width', 227 ) );
+	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'oldschool_header_image_height',	54 ) );
+	define( 'HEADER_TEXTCOLOR', apply_filters( 'oldschool_header_image_textcolor', "#ff4a4b" ) );
 	
-	add_custom_image_header('', 'storefrontal_header_image_style','storefrontal_header_image_style_admin');
+	add_custom_image_header('', 'oldschool_header_image_style','oldschool_header_image_style_admin');
+
+	function oldschool_header_image_style(){
+		echo "<style type='text/css'>";
+		echo "#logo a{";
+		echo "height: " . HEADER_IMAGE_HEIGHT . "px";
+		echo "width: " . HEADER_IMAGE_WIDTH . "px";
+		echo "background-image:"; header_image(); echo ";"; 
+		echo "}";
+		echo "</style>";
+
+	}
+
+	function oldschool_header_image_style_admin(){
+		echo "<style type='text/css'>";
+		echo "#logo{";
+		echo "margin-bottom: 0.3em;";
+		echo "}";
+		echo "#logo a{";
+		echo "height: " . HEADER_IMAGE_HEIGHT . "px";
+		echo "width: " . HEADER_IMAGE_WIDTH . "px";
+		echo "background-image:"; header_image(); echo ";"; 
+		echo "font-family: Neuton;";
+		echo "color: #ff4a4b;";
+		echo "font-size: 53px;";
+		echo "font-weight: normal;";
+		echo "text-decoration: none;";
+		echo "}";
+		echo "p.desc{";
+		echo "text-transform: uppercase;";
+		echo "font-family: Neuton;";
+		echo "font-size: 17px;";
+		echo "color: #6b6666;";
+		echo "}";
+		echo "</style>";
+		echo "<h1 id='logo'><a href=" . get_bloginfo('url') . ">" . get_bloginfo('name') . "</a></h1>";
+		echo "<p class='desc'>" . get_bloginfo('description') . "</h1>";
+
+	}
 
 }
+add_action( 'after_setup_theme', 'oldschool_init' );
 
-add_action("init","storefrontal_init",400);
 function oldschool_widgets_init() {
 
 	// Register Widgetized areas.
