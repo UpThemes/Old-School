@@ -4,7 +4,7 @@
 
 $up_options = upfw_get_options();
 
-if( is_home() && $up_options->hide_homepage_images == 'no' ) {
+if( is_front_page() && $up_options->hide_homepage_images == 'no' ) {
 	get_template_part('loop','featured');
 }
 
