@@ -1,16 +1,8 @@
 <?php
 
-require_once('admin/admin.php');
-
-// Initialize Theme Options
-function oldschool_options_init(){
-
-	require_once('theme-options/ad-management.php');
-	require_once('theme-options/general-settings.php');;
-
-}
-add_action('upfw_theme_init','oldschool_options_init',10);
-add_action('upfw_admin_init','oldschool_options_init',10);
+require_once('admin/options.php');
+require_once('theme-options/ad-management.php');
+require_once('theme-options/general-settings.php');
 
 function oldschool_setup_theme() {
 
